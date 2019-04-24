@@ -1,0 +1,2 @@
+新建数据库j2ee_assignment，之后运行test.sql，那么数据库中的表格和数据就新建好了；
+在webContent的think文件夹里面有和项目有关的session的说明；

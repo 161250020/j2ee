@@ -1,0 +1,107 @@
+1：使用的架构：mvc+hibernate；
+
+
+session：
+//共同：
+err_info：登录错误的详情；
+register_err_info：注册的错误详情；
+
+//会员：
+//会员登录：
+user_info：正在登录的会员的信息；
+//选择餐厅：
+rest_type_id：选择餐厅页面将要展示的餐厅的类型的ID；
+all_rest_info：对应餐厅类型的所有餐厅的详细信息；
+//选择商品：
+choose_rest_info：选择的餐厅的基本信息；
+choose_rest_singleproduct：选择的餐厅的单品的信息；
+choose_rest_setmeal：选择的餐厅的套餐的基本信息；
+choose_rest_preferencial：选择的餐厅的优惠的基本信息；
+choose_commodity_err_info：选择商品的数量的错误信息；
+//会员注册：
+register_err_info：注册错误的详情；
+register_new_member：注册的用户的信息；
+identifyingCode：注册的时候生成的验证码；
+//订单：
+member_addresses：该用户正在使用的送货地址；
+change_ps：在支付成功的时候，需要将这个优惠的结果修改为1---已使用（若ID为null，则无需修改）；
+ps_money：订单优惠的金额；
+num1, num2, num3：订单的：单品，套餐，优惠对应的数量；
+order_sum_money：订单需要支付的金额；
+order_address_info：订单使用的地址的信息；
+min_mins：系统判断的订单的送达时间（minutes）；
+order_info：订单的基本信息；
+order_pay_result：订单支付的情况（0：支付超时；1：余额不足；2：支付成功；）；
+get_time：会员要求的订单送达的时间；
+member_level：会员的等级；
+member_level_comment：会员等级的描述；
+//订单内容展示：
+all_order_info：该会员的所有订单内容；
+//查看订单基本内容：
+order_content_info：一个需要详细展示的订单的Member_order_info；
+//会员修改密码：
+modify_pass_err_info：会员修改密码的错误信息；
+//会员修改地址信息：
+modify_address_id：会员要修改的地址的id；
+//查看统计信息：
+//点餐：---所有该会员订单的信息
+order_start_time, order_end_time：数据显示的日期段；
+order_orders_list：需要展示的订单的列表；
+order_start_mon, order_end_mon：数据显示的金额段；
+//退订：---所有该会员退订订单的信息
+unsubscribe_start_time, unsubscribe_end_time：数据显示的日期段；
+unsubscribe_start_mon, unsubscribe_end_mon：数据显示的金额段；
+unsubscribe_orders_list：需要展示的订单的列表；
+//消费：---所有该会员成功订单的信息---已送达
+consume_start_time, consume_end_time：数据显示的日期段；
+consume_start_mon, consume_end_mon：数据显示的金额段；
+consume_orders_list：需要展示的订单的列表；
+
+
+//经理：
+manager_info：登录的经理的信息；
+//查看统计信息：
+//商家：
+register_rest_num：注册商家数目；
+start_date, end_date：需要显示的商家注册的时间段的value；
+//会员：
+member_start_date,member_end_date：会员统计的时间段；
+member_sum_nums：会员统计需要现实的4个数据（ArrayList<Double>）；
+//yummy：
+yummy_start_date,yummy_end_date：yummy统计的时间段；
+yummy_sum_nums：yummy统计需要实现的两个数据（ArrayList<Double>）；
+//审批餐厅注册和修改：
+//餐厅注册：
+register_info：需要审批的注册的餐厅的信息；
+//餐厅修改：
+modify_info：需要审批的修改的餐厅的信息；
+//餐厅商品添加：
+publish_info：需要审批的餐厅商品添加的信息；
+//待支付的订单的信息：
+to_pay_orders_info：待支付的订单的信息；
+//结算：
+account_info：本次结算的信息---用于添加结算记录的时候使用；
+account_orders：已结算的订单的信息；
+
+
+//餐厅：
+rest_info：登录的餐厅的信息；
+rest_orders_list：餐厅的所有订单信息；
+//注册：
+new_7chars：新注册的餐厅的7位编码；
+register_new_rest：注册的新餐厅的信息；
+identifyingCode：餐厅注册的验证码；
+//查看注册餐厅的审批结果：
+examine_result：注册餐厅审批信息的列表---根据餐厅的7位ID来获得一个arraylist的信息；
+//修改密码：
+err_modify_info：修改密码的结果；
+//查看统计信息：
+//order：
+order_rest_start_time, order_rest_end_time：点餐的时间段；
+order_rest_start_mon, order_rest_end_mon：点餐的金额段；
+order_rest_orders_list：点餐的订单；
+//unsubscribe：---类似order的，但是将order改为unsubscribe
+//finance：---类似order的，但是将order改为finance
+//订单的详细内容查看：
+order_content_info：需要详细查看的订单的基本信息；
+
