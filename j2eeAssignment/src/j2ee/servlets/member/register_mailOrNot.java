@@ -54,7 +54,7 @@ public class register_mailOrNot extends HttpServlet {
 		HttpSession session=request.getSession(true);
 		ServletContext context = getServletContext();
 		
-		//ÊäÈëµÄÄÚÈİ
+		//è¾“å…¥çš„å†…å®¹
 		String uuid=UUID.randomUUID().toString();
 		String new_username=request.getParameter("new_username");
 		String new_password=request.getParameter("new_password");
@@ -66,33 +66,33 @@ public class register_mailOrNot extends HttpServlet {
 		String new_mail=request.getParameter("new_mail");
 		
 		String register_err_info="";
-		//¼ì²âÓÃ»§Ãû²»ÖØ¸´
+		//æ£€æµ‹ç”¨æˆ·åä¸é‡å¤
 		ArrayList<Member_info> members_info=(ArrayList<Member_info>) ServiceFactory.getMember_infoManageService().getAllMembersInfo();
 		for(int i=0;i<members_info.size();i++) {
 			if(members_info.get(i).getUsername().equals(new_username)) {
-				register_err_info="ÓÃ»§ÃûÖØ¸´£¡";
+				register_err_info="ç”¨æˆ·åé‡å¤ï¼";
 				break;
 			}
 			else if(new_username.length()<=5) {
-				register_err_info="ÓÃ»§ÃûÌ«¶Ì£¡";
+				register_err_info="ç”¨æˆ·åå¤ªçŸ­ï¼";
 				break;
 			}
 		}
-		//¼ì²âÓÊÏä²»ÖØ¸´
+		//æ£€æµ‹é‚®ç®±ä¸é‡å¤
 		for(int i=0;i<members_info.size();i++) {
 			if(members_info.get(i).getMail().equals(new_mail)) {
-				register_err_info="¸ÃÓÊÏäÒÑ×¢²á£¡";
+				register_err_info="è¯¥é‚®ç®±å·²æ³¨å†Œï¼";
 				break;
 			}
 		}
-		//¼ì²âÁ½´ÎÃÜÂëÊäÈëÒ»ÖÂ
+		//æ£€æµ‹ä¸¤æ¬¡å¯†ç è¾“å…¥ä¸€è‡´
 		if(!new_password.equals(new_re_password)) {
-			register_err_info="Á½´ÎÃÜÂëÊäÈë²»Ò»ÖÂ£¡";
+			register_err_info="ä¸¤æ¬¡å¯†ç è¾“å…¥ä¸ä¸€è‡´ï¼";
 		}
 		if(new_password.length()<=5) {
-			register_err_info="ÃÜÂëÌ«¶Ì£¡";
+			register_err_info="å¯†ç å¤ªçŸ­ï¼";
 		}
-		//¼ì²âÍøÒø´æÔÚ£¬ÍøÒøIDºÍÃÜÂë·ûºÏ
+		//æ£€æµ‹ç½‘é“¶å­˜åœ¨ï¼Œç½‘é“¶IDå’Œå¯†ç ç¬¦åˆ
 		ArrayList<Cyber_bank_info> cyber_bank_info=(ArrayList<Cyber_bank_info>) ServiceFactory.getCyber_bank_infoManageService().getAllBankInfo();
 		Cyber_bank_info c=new Cyber_bank_info();
 		boolean exist=false;
@@ -105,25 +105,25 @@ public class register_mailOrNot extends HttpServlet {
 		}
 		if(exist) {
 			if(!c.getPassword().equals(new_bank_pass)) {
-				register_err_info="ÍøÒøÕË»§ÃÜÂëÊäÈë´íÎó£¡";
+				register_err_info="ç½‘é“¶è´¦æˆ·å¯†ç è¾“å…¥é”™è¯¯ï¼";
 			}
 		}
 		else {
-			register_err_info="¸ÃÍøÒøÕË»§²»´æÔÚ£¡";
+			register_err_info="è¯¥ç½‘é“¶è´¦æˆ·ä¸å­˜åœ¨ï¼";
 		}
-		//ÈôÓĞ´íÎó£º·µ»Ø´íÎóĞÅÏ¢
-		if(!register_err_info.equals("")) {//ÓĞ´íÎó
+		//è‹¥æœ‰é”™è¯¯ï¼šè¿”å›é”™è¯¯ä¿¡æ¯
+		if(!register_err_info.equals("")) {//æœ‰é”™è¯¯
 			session.setAttribute("register_err_info", register_err_info);
 			context.getRequestDispatcher("/jsps/member/register.jsp").forward(request, response);	
 			
 		}
-		else {//ÈôÃ»ÓĞÈÎºÎ´íÎó£º½«»ù±¾ĞÅÏ¢´æ´¢ÔÚsessionµ±ÖĞ£¬·¢ËÍÑéÖ¤Âë¸øÓÊÏä£¬Ìø×ªµ½register2.jspÒ³ÃæÉÏÃæ
-			//´æ´¢×¢²áĞÅÏ¢ÔÚsessionµ±ÖĞ
+		else {//è‹¥æ²¡æœ‰ä»»ä½•é”™è¯¯ï¼šå°†åŸºæœ¬ä¿¡æ¯å­˜å‚¨åœ¨sessionå½“ä¸­ï¼Œå‘é€éªŒè¯ç ç»™é‚®ç®±ï¼Œè·³è½¬åˆ°register2.jspé¡µé¢ä¸Šé¢
+			//å­˜å‚¨æ³¨å†Œä¿¡æ¯åœ¨sessionå½“ä¸­
 			Member_info new_member=new Member_info();
 			new_member.setId(uuid);
 			new_member.setLogoff(0);
 			new_member.setBank_id(new_bank_id);
-			//»ñµÃµ±Ç°Ê±¼ä
+			//è·å¾—å½“å‰æ—¶é—´
 			new_member.setCreate_date(new java.sql.Date(new java.util.Date().getTime()));
 			new_member.setMail(new_mail);
 			new_member.setName(new_name);
@@ -132,24 +132,24 @@ public class register_mailOrNot extends HttpServlet {
 			new_member.setUsername(new_username);
 			session.setAttribute("register_new_member", new_member);
 			
-			//Éú³ÉÑéÑéÖ¤Âë
+			//ç”ŸæˆéªŒéªŒè¯ç 
 			String identifyingCode=UUID.randomUUID().toString();
 			session.setAttribute("identifyingCode", identifyingCode);
-			//·¢ËÍÑéÖ¤Âë
-			String smtpServer="smtp.nju.edu.cn";//ÓÊ¼ş·şÎñÆ÷Ö÷»úÃû
+			//å‘é€éªŒè¯ç 
+			String smtpServer="smtp.nju.edu.cn";//é‚®ä»¶æœåŠ¡å™¨ä¸»æœºå
 			String protocol="smtp";
 			String username="161250020@smail.nju.edu.cn";
-			String password="Dww112358";
+			String password="";//å¼€å¯SMTPæœåŠ¡æˆæƒç /é‚®ç®±å¯†ç 
 			String from="161250020@smail.nju.edu.cn";
 			String to=new_mail;
-			String subject="yummyÑéÖ¤Âë";
+			String subject="yummyéªŒè¯ç ";
 			String body=identifyingCode;
 			  
 			Properties properties = new Properties();
 			properties.put(javax.naming.Context.PROVIDER_URL, "jnp:///");
 			properties.put(javax.naming.Context.INITIAL_CONTEXT_FACTORY,"org.apache.naming.java.javaURLContextFactory");
 			  
-			  //»ñÈ¡Session¶ÔÏó
+			  //è·å–Sessionå¯¹è±¡
 			  try {
 			   InitialContext jndiContext = new InitialContext(properties);
 			   Context envCtx = (Context) jndiContext.lookup("java:comp/env");
@@ -158,7 +158,7 @@ public class register_mailOrNot extends HttpServlet {
 			   //Context envCtx=(Context) iniCtx.lookup("java:comp/env");
 			   //Session session=(Session) envCtx.lookup("mail/Session");
 			   
-			   //´´½¨´ú±íÓÊ¼şµÄMimeMessage¶ÔÏó
+			   //åˆ›å»ºä»£è¡¨é‚®ä»¶çš„MimeMessageå¯¹è±¡
 			   MimeMessage msg=new MimeMessage(mailSession);
 			   msg.setFrom(new InternetAddress(from));
 			   msg.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
