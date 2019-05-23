@@ -51,7 +51,7 @@ public class register extends HttpServlet {
 		HttpSession session=request.getSession(true);
 		ServletContext context = getServletContext();
 		
-		//ÊäÈëµÄÄÚÈİ
+		//è¾“å…¥çš„å†…å®¹
 		String uuid=UUID.randomUUID().toString();
 		String login_id=(String)session.getAttribute("new_7chars");
 		String new_password=request.getParameter("new_pass");
@@ -68,23 +68,23 @@ public class register extends HttpServlet {
 		String new_mail=request.getParameter("new_email");
 		
 		String register_err_info="";
-		//¼ì²â²ÍÌüÃû³Æ²»¿ÉÎª¿Õ
+		//æ£€æµ‹é¤å…åç§°ä¸å¯ä¸ºç©º
 		if(new_name.equals("")) {
-			register_err_info="²ÍÌüÃû³Æ²»¿ÉÎª¿Õ£¡";
+			register_err_info="é¤å…åç§°ä¸å¯ä¸ºç©ºï¼";
 		}
-		//¼ì²âmail²»ÖØ¸´
+		//æ£€æµ‹mailä¸é‡å¤
 		ArrayList<Restaurant_info> rests_info=(ArrayList<Restaurant_info>) ServiceFactory.getRestaurant_infoManageService().getAllRestsInfo();
 		for(int i=0;i<rests_info.size();i++) {
 			if(rests_info.get(i).getMail().equals(new_mail)) {
-				register_err_info="¸ÃÓÊÏäÒÑ×¢²á£¡";
+				register_err_info="è¯¥é‚®ç®±å·²æ³¨å†Œï¼";
 				break;
 			}
 		}
-		//¼ì²âÁ½´ÎÃÜÂëÊäÈëÒ»ÖÂ
+		//æ£€æµ‹ä¸¤æ¬¡å¯†ç è¾“å…¥ä¸€è‡´
 		if(!new_password.equals(new_re_password)) {
-			register_err_info="Á½´ÎÃÜÂëÊäÈë²»Ò»ÖÂ£¡";
+			register_err_info="ä¸¤æ¬¡å¯†ç è¾“å…¥ä¸ä¸€è‡´ï¼";
 		}
-		//¼ì²âÍøÒø´æÔÚÇÒÃÜÂëÕıÈ·
+		//æ£€æµ‹ç½‘é“¶å­˜åœ¨ä¸”å¯†ç æ­£ç¡®
 		ArrayList<Cyber_bank_info> cyber_bank_info=(ArrayList<Cyber_bank_info>) ServiceFactory.getCyber_bank_infoManageService().getAllBankInfo();
 		Cyber_bank_info c=new Cyber_bank_info();
 		boolean exist=false;
@@ -97,21 +97,21 @@ public class register extends HttpServlet {
 		}
 		if(exist) {
 			if(!c.getPassword().equals(new_bank_pass)) {
-				register_err_info="ÍøÒøÕË»§ÃÜÂëÊäÈë´íÎó£¡";
+				register_err_info="ç½‘é“¶è´¦æˆ·å¯†ç è¾“å…¥é”™è¯¯ï¼";
 			}
 		}
 		else {
-			register_err_info="¸ÃÍøÒøÕË»§²»´æÔÚ£¡";
+			register_err_info="è¯¥ç½‘é“¶è´¦æˆ·ä¸å­˜åœ¨ï¼";
 		}
 		
-		//ÈôÓĞ´íÎóĞÅÏ¢£¬·µ»Ø×¢²áÒ³Ãæ
-		if(!register_err_info.equals("")) {//ÓĞ´íÎó
+		//è‹¥æœ‰é”™è¯¯ä¿¡æ¯ï¼Œè¿”å›æ³¨å†Œé¡µé¢
+		if(!register_err_info.equals("")) {//æœ‰é”™è¯¯
 			session.setAttribute("register_err_info", register_err_info);
 			context.getRequestDispatcher("/jsps/restaurant/register.jsp").forward(request, response);	
 		}
-		//ÈôÎŞ´íÎóĞÅÏ¢£¬Ç°Íù¶©µ¥Õ¹Ê¾Ò³Ãæ
+		//è‹¥æ— é”™è¯¯ä¿¡æ¯ï¼Œå‰å¾€è®¢å•å±•ç¤ºé¡µé¢
 		else {
-			//´æ´¢×¢²áĞÅÏ¢ÔÚsessionµ±ÖĞ
+			//å­˜å‚¨æ³¨å†Œä¿¡æ¯åœ¨sessionå½“ä¸­
 			Restaurant_info r=new Restaurant_info();
 			r.setAddress(new_add);
 			r.setBank_id(new_bank_id);
@@ -128,24 +128,24 @@ public class register extends HttpServlet {
 			r.setType_id(Integer.parseInt(new_type));
 			session.setAttribute("register_new_rest", r);
 			
-			//Éú³ÉÑéÑéÖ¤Âë
+			//ç”ŸæˆéªŒéªŒè¯ç 
 			String identifyingCode=UUID.randomUUID().toString();
 			session.setAttribute("identifyingCode", identifyingCode);
-			//·¢ËÍÑéÖ¤Âë
-			String smtpServer="smtp.nju.edu.cn";//ÓÊ¼ş·şÎñÆ÷Ö÷»úÃû
+			//å‘é€éªŒè¯ç 
+			String smtpServer="smtp.nju.edu.cn";//é‚®ä»¶æœåŠ¡å™¨ä¸»æœºå
 			String protocol="smtp";
 			String username="161250020@smail.nju.edu.cn";
-			String password="Dww112358";
+			String password="";//å¼€å¯SMTPæœåŠ¡æˆæƒç /é‚®ç®±å¯†ç 
 			String from="161250020@smail.nju.edu.cn";
 			String to=new_mail;
-			String subject="yummyÑéÖ¤Âë";
+			String subject="yummyéªŒè¯ç ";
 			String body=identifyingCode;
 			  
 			Properties properties = new Properties();
 			properties.put(javax.naming.Context.PROVIDER_URL, "jnp:///");
 			properties.put(javax.naming.Context.INITIAL_CONTEXT_FACTORY,"org.apache.naming.java.javaURLContextFactory");
 			  
-			  //»ñÈ¡Session¶ÔÏó
+			  //è·å–Sessionå¯¹è±¡
 			  try {
 			   InitialContext jndiContext = new InitialContext(properties);
 			   Context envCtx = (Context) jndiContext.lookup("java:comp/env");
@@ -154,7 +154,7 @@ public class register extends HttpServlet {
 			   //Context envCtx=(Context) iniCtx.lookup("java:comp/env");
 			   //Session session=(Session) envCtx.lookup("mail/Session");
 			   
-			   //´´½¨´ú±íÓÊ¼şµÄMimeMessage¶ÔÏó
+			   //åˆ›å»ºä»£è¡¨é‚®ä»¶çš„MimeMessageå¯¹è±¡
 			   MimeMessage msg=new MimeMessage(mailSession);
 			   msg.setFrom(new InternetAddress(from));
 			   msg.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
